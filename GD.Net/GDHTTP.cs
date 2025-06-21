@@ -1,12 +1,6 @@
-﻿using System;
-using System.ComponentModel;
-using System.Net;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Windows.Markup;
+﻿using System.Text;
 
-namespace GDAPI
+namespace GD
 {
     internal static class GDHTTP
     {
@@ -31,9 +25,9 @@ namespace GDAPI
                 return client.GetStringAsync(url).Result;
             }
         }
-        public static GDServerResponse Post(string url, string parameters, string secret=DEFAULT_SECRET, char separator=GDServerResponse.DEFAULT_SEPARATOR, string baseAddress = DEFAULT_URL)
+        public static GDServerResponse Post(string url, string parameters, string secret=DEFAULT_SECRET, char separator=GDServerResponse.DEFAULT_SEPARATOR, string baseAddress = DEFAULT_URL, string gameVersion = "22", string binaryVersion = "38")
         {
-            StringContent p = new StringContent($"gameVersion=21&binaryVersion=34&gdw=0&{parameters}&secret={secret}", Encoding.UTF8, "application/x-www-form-urlencoded");
+            StringContent p = new StringContent($"gameVersion={gameVersion}&binaryVersion={binaryVersion}&gdw=0&{parameters}&secret={secret}", Encoding.UTF8, "application/x-www-form-urlencoded");
 
             using (var client = GetHttpClient(baseAddress))
             {

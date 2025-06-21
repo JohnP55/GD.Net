@@ -1,0 +1,21 @@
+﻿{
+  "AudioTrack": "kA1",
+  "Gamemode": "kA2",
+  "Mini Mode": "kA3",
+  "Speed": "kA4",
+  "Background Texture ID": "kA6",
+  "Ground Texture ID": "kA7",
+  "Dual Mode": "kA8",
+  "Level/Start Pos Object": "kA9",
+  "2-Player Mode": "kA10",
+  "Flip Gravity": "kA11",
+  "Song Offset": "kA13",
+  "Guidelines": "kA14",
+  "Fade In": "kA15",
+  "Fade Out": "kA16",
+  "Ground Line": "kA17",
+  "Font": "kA18",
+  "Platformer Mode": "kA22",
+  "Colors": "kS38",
+  "Color Page": "kS39"
+}

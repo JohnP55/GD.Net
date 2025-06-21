@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GDAPI
+namespace GD
 {
+    // TODO: GJP2 (I'm releasing this before adding anything new, this has been sitting on my pc for like 2 years)
     public static class GJPTools
     {
         private const string KEY = "37526";

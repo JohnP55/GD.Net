@@ -12,7 +12,7 @@
   "touch_triggered": "11",
   "gold_coin_number": "12",
   "special_obj_checked": "13",
-  "tint_ground": 14,
+  "tint_ground": "14",
   "player_color_1": "15",
   "player_color_2": "16",
   "blending": "17",
@@ -94,5 +94,7 @@
   "follow_player_y_max_speed": "105",
   "pulsing_animation_randomize": "106",
   "pulsing_animation_speed": "107",
-  "linked_group": "108"
+  "linked_group": "108",
+  "x_scale": "128",
+  "y_scale": "129"
 }

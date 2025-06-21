@@ -5,7 +5,7 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GDAPI
+namespace GD
 {
     public class IncorrectAccountInfoException : Exception
     {
@@ -25,18 +25,9 @@ namespace GDAPI
             Password = password;
             GJP = GJPTools.Encode(Password);
 
-            GDLoginResponse response = Login();
+            GDLoginResponse response = API.Login(Username, Password);
             AccountID = response.AccountId;
             UserID = response.UserId;
-        }
-
-        public GDLoginResponse Login()
-        {
-            string url = "accounts/loginGJAccount.php";
-            string parameters = $"udid=doesntmatterlolxd&userName={Username}&password={Password}&sID=6969696969";
-            GDLoginResponse response = new GDLoginResponse(GDHTTP.Post(url, parameters, GDHTTP.ACCOUNT_SECRET, ','));
-
-            return response;
         }
     }
 
@@ -50,7 +41,7 @@ namespace GDAPI
                 throw new IncorrectAccountInfoException();
 
             // shitty hack but that's what you get when you try to generalize robtop code
-            AccountId = Data.Keys.First();
+            AccountId = Convert.ToInt32(Data.Keys.First());
             UserId = GetInt(AccountId);
             // man couldn't keep his server response formats consistent smh
         }

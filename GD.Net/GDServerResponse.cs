@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GDAPI
+namespace GD
 {
     public enum Status
     {
@@ -13,66 +13,21 @@ namespace GDAPI
         Error
     }
 
-    public class GDServerResponse
+    public class GDServerResponse : GDSerializedObject
     {
-        private const char DEFAULT_SEPARATOR = ':';
-        private class EvenSeparatorCountException : Exception
-        {
-            public EvenSeparatorCountException() : base("The response cannot be evenly separated in key-value pairs (The number of separators is even)") { }
-        }
-        private char Separator { get; }
+        public const char DEFAULT_SEPARATOR = ':';
         public Status Status { get; } = Status.Success;
-        public Dictionary<int, string> Data { get; } = new Dictionary<int, string>();
-        public GDServerResponse(string response, char separator = DEFAULT_SEPARATOR)
+        public GDServerResponse(string response, char separator = DEFAULT_SEPARATOR) : base(response, separator)
         {
-            Separator = separator;
-
             if (response == "-1")
             {
                 Status = Status.Error;
                 return;
             }
-
-            if (!response.Any(x => x == Separator))
-            {
-                Data.Add(0, response);
-                return;
-            }
-
-            if (response.Count(x => x == Separator) % 2 == 0)
-                throw new EvenSeparatorCountException();
-
-            string[] attrs = response.Split("#")[0].Split(Separator);
-
-            for (int i = 0; i < attrs.Length; i += 2)
-            {
-                Data.Add(Convert.ToInt32(attrs[i]), attrs[i + 1]);
-            }
         }
-        public GDServerResponse(GDServerResponse response)
+        public GDServerResponse(GDServerResponse response) : base(response)
         {
             Status = response.Status;
-            Data = response.Data;
-            Separator = response.Separator;
-        }
-        protected string GetString(int key)
-        {
-            Data.TryGetValue(key, out string? result);
-            return result ?? "";
-        }
-        protected int GetInt(int key)
-        {
-            if (Data.TryGetValue(key, out string? result))
-                if (result != "")
-                    return Convert.ToInt32(result);
-            return 0;
-        }
-        protected bool GetBoolean(int key)
-        {
-            if (Data.TryGetValue(key, out string? result))
-                if (result != "")
-                    return result == "1";
-            return false;
         }
     }
     public class GDIntegerResponse : GDServerResponse
@@ -201,6 +156,10 @@ namespace GDAPI
             CommentHistoryState = (CommentHistoryStateValues)GetInt(50);
         }
     }
+    public class LevelDoesNotExistException : Exception
+    {
+        public LevelDoesNotExistException() : base("The level does not exist.") { }
+    }
     public class GDLevelResponse : GDServerResponse
     {
         public int Id { get; }
@@ -225,6 +184,7 @@ namespace GDAPI
 
         public GDLevelResponse(GDServerResponse response) : base(response)
         {
+            if (response.Status == Status.Error) throw new LevelDoesNotExistException();
             Id = GetInt(1);
             Name = GetString(2);
             Description = GetString(3).Base64Decode();
@@ -240,7 +200,7 @@ namespace GDAPI
 
             Password = GetString(27);
             if (Password != "0")
-                Password = Utils.UndoXorBase64(Password, "26364");
+                Password = Utils.UndoXorBase64(Password, "26364")[1..];
 
             UploadDate = GetString(28);
             UpdateDate = GetString(29);

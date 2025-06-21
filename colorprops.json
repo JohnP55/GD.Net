@@ -1,0 +1,20 @@
+﻿{
+  "FromColourRed": "1",
+  "FromColourGreen": "2",
+  "FromColourBlue": "3",
+  "PlayerColor": "4",
+  "Blending": "5",
+  "ColourChannelIndex": "6",
+  "FromOpacity": "7",
+  "ToggleOpacity": "8",
+  "InheritedColourChannelIndex": "9",
+  "HSV": "10",
+  "ToColourRed": "11",
+  "ToColourGreen": "12",
+  "ToColourBlue": "13",
+  "DeltaTime": "14",
+  "ToOpacity": "15",
+  "Duration": "16",
+  "CopyOpacity": "17",
+  "18": "18"
+}

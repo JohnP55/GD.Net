@@ -1,9 +1,7 @@
-﻿using System;
-using System.Linq;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace GDAPI
+namespace GD
 {
     public struct CHK
     {
